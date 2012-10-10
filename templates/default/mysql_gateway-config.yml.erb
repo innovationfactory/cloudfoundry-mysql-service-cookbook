@@ -1,17 +1,28 @@
 ---
-cloud_controller_uri: <%= node.cloudfoundry_cloud_controller.server.api_uri %>
+cloud_controller_uri: <%= node[:cloudfoundry_cloud_controller][:server][:api_uri] %>
 service:
   name: mysql
   version: "5.1"
   description: 'MySQL database service'
   plans: ['free']
+  default_plan: 'free'
   tags: ['mysql', 'mysql-5.1', 'relational']
-host: localhost
+  timeout: <%= node[:cloudfoundry_mysql_service][:gateway][:timeout] %>
+  supported_versions: <%= "['#{node[:cloudfoundry_mysql_service][:supported_versions].keys.join("', '")}']"%>
+  version_aliases:
+<%
+  node[:cloudfoundry_mysql_service][:version_aliases].each do |a, v|
+%>
+    "<%= a %>": "<%= v %>"
+<% end %>
+
+
+ip_route: <%= node[:ipaddress] %>
 index: 0
-token: <%= node.cloudfoundry_common.service_token %>
-mbus: nats://<%= node.nats_server.user %>:<%= node.nats_server.password %>@<%= node.cloudfoundry_common.nats_server.host %>:<%= node.nats_server.port %>/
-pid: <%= node.cloudfoundry_mysql_service.gateway.pid_file %>
-node_timeout: <%= node.cloudfoundry_mysql_service.gateway.node_timeout %>
+node_timeout: <%= node[:cloudfoundry_mysql_service][:gateway][:node_timeout] %>
+token: <%= node[:cloudfoundry_common][:service_token] %>
+mbus: nats://<%= node[:cloudfoundry_common][:nats_server][:user] %>:<%= node[:cloudfoundry_common][:nats_server][:password] %>@<%= node[:cloudfoundry_common][:nats_server][:host] %>:<%= node[:cloudfoundry_common][:nats_server][:port] %>/
+pid: <%= @pid_file %>
 logging:
-  level: <%= node.cloudfoundry_mysql_service.gateway.log_level %>
-  file: <%= node.cloudfoundry_mysql_service.gateway.log_file %>
+  level: <%= node[:cloudfoundry_mysql_service][:gateway][:log_level] %>
+  file: <%=  @log_file %>

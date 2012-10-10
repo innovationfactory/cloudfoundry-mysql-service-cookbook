@@ -1,10 +1,25 @@
-package 'libcurl3'
-package 'libcurl3-gnutls'
-package 'libcurl4-openssl-dev'
+#
+# Cookbook Name:: cloudfoundry-mongodb-service
+# Recipe:: gateway
+#
+# Copyright 2012, Innovation Factory
+# Copyright 2012, Trotter Cashion
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-cloudfoundry_component "mysql_gateway" do
-  install_path File.join(node.cloudfoundry_common.vcap.install_path, "services", "mysql")
-  bin_file     File.join(node.cloudfoundry_common.vcap.install_path, "bin", "services", "mysql_gateway")
-  pid_file     node.cloudfoundry_mysql_service.gateway.pid_file
-  log_file     node.cloudfoundry_mysql_service.gateway.log_file
+cloudfoundry_service_component "mysql_gateway" do
+  service_name  "mysql"
+  action        [:create, :enable]
 end
+

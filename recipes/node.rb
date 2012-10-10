@@ -1,21 +1,43 @@
+#
+# Cookbook Name:: cloudfoundry-mysql-service
+# Recipe:: node
+#
+# Copyright 2012, Innovation Factory
+# Copyright 2012, Trotter Cashion
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+node.default['cloudfoundry_mysql_service']['node']['base_dir'] = File.join(node['cloudfoundry_common']['services_dir'], "mysql")
+node.default['cloudfoundry_mysql_service']['node']['db_logs_dir'] = File.join(node['cloudfoundry_common']['log_dir'], "mysql")
+node.default['cloudfoundry_mysql_service']['node']['instances_dir'] = File.join(node['cloudfoundry_mysql_service']['node']['base_dir'], "instances")
+
 include_recipe "mysql::server"
 
-package 'libcurl3'
-package 'libcurl3-gnutls'
-package 'libcurl4-openssl-dev'
-
-package "sqlite3"
-package "libsqlite3-ruby"
-package "libsqlite3-dev"
-
-cloudfoundry_component "mysql_node" do
-  install_path File.join(node.cloudfoundry_common.vcap.install_path, "services", "mysql")
-  bin_file     File.join(node.cloudfoundry_common.vcap.install_path, "bin", "services", "mysql_node")
-  pid_file     node.cloudfoundry_mysql_service.node.pid_file
-  log_file     node.cloudfoundry_mysql_service.node.log_file
+%w[libcurl3 libcurl3-gnutls libcurl4-openssl-dev sqlite3 libsqlite3-ruby libsqlite3-dev].each do |p|
+  package p
 end
 
-directory node.cloudfoundry_mysql_service.node.base_dir do
-  owner node.cloudfoundry_common.user
-  mode  "0755"
+%w[base_dir db_logs_dir instances_dir].each do |d|
+  directory node['cloudfoundry_mysql_service']['node'][d] do
+    owner node['cloudfoundry_common']['user']
+    mode  "0755"
+  end
 end
+
+cloudfoundry_service_component "mysql_node" do
+  service_name "mysql"
+  action       [:create, :enable]
+end
+
+

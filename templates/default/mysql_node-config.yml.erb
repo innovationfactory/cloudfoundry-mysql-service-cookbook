@@ -1,17 +1,25 @@
 ---
-local_db: sqlite3:<%= node.cloudfoundry_mysql_service.node.base_dir %>/mysql_node.db
+capacity: <%= node[:cloudfoundry_mysql_service][:node][:capacity] %>
+plan: free
+local_db: sqlite3:<%= node[:cloudfoundry_mysql_service][:node][:base_dir] %>/mysql_node.db
 base_dir: <%= node.cloudfoundry_mysql_service.node.base_dir %>
 mysqldump_bin: mysqldump
 gzip_bin: gzip
 mysql_bin: mysql
-mbus: nats://<%= node.nats_server.user %>:<%= node.nats_server.password %>@<%= node.cloudfoundry_common.nats_server.host %>:<%= node.nats_server.port %>/
+mbus: nats://<%= node[:cloudfoundry_common][:nats_server][:user] %>:<%= node[:cloudfoundry_common][:nats_server][:password] %>@<%= node[:cloudfoundry_common][:nats_server][:host] %>:<%= node[:cloudfoundry_common][:nats_server][:port] %>/
 index: <%= node.cloudfoundry_mysql_service.node[:index] %>
 pid: <%= node.cloudfoundry_mysql_service.node.pid_file %>
-available_storage: <%= node.cloudfoundry_mysql_service.node.available_storage %>
 node_id: mysql_node_<%= node.cloudfoundry_mysql_service.node[:index] %>
+supported_versions: <%= "['#{node[:cloudfoundry_mysql_service][:supported_versions].keys.join("', '")}']"%>
+default_version: "<%= node.cloudfoundry_mysql_service.default_version %>"
+op_time_limit: <%= node.cloudfoundry_mysql_service.node.op_time_limit %>
+connection_wait_timeout: <%= node.cloudfoundry_mysql_service.node.connection_wait_timeout %>
+ip_route: <%= node.ipaddress %>
+available_storage: <%= node.cloudfoundry_mysql_service.node.available_storage %>
 max_db_size: <%= node.cloudfoundry_mysql_service.node.max_db_size %>
 max_long_query: <%= node.cloudfoundry_mysql_service.node.max_long_query %>
 max_long_tx: <%= node.cloudfoundry_mysql_service.node.max_long_tx %>
+kill_long_tx: <%= node.cloudfoundry_mysql_service.node.kill_long_tx %>
 migration_nfs: <%= node.cloudfoundry_mysql_service.node.migration_nfs %>
 mysql:
   host: localhost #<%= node.mysql.bind_address %>
