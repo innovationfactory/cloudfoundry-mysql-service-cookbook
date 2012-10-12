@@ -21,6 +21,7 @@
 node.default['cloudfoundry_mysql_service']['node']['base_dir'] = File.join(node['cloudfoundry_common']['services_dir'], "mysql")
 node.default['cloudfoundry_mysql_service']['node']['db_logs_dir'] = File.join(node['cloudfoundry_common']['log_dir'], "mysql")
 node.default['cloudfoundry_mysql_service']['node']['instances_dir'] = File.join(node['cloudfoundry_mysql_service']['node']['base_dir'], "instances")
+node.default['mysql']['bind_address'] = node['ipaddress']
 
 include_recipe "mysql::server"
 
