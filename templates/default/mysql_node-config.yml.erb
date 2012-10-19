@@ -1,16 +1,16 @@
 ---
-capacity: <%= node[:cloudfoundry_mysql_service][:node][:capacity] %>
+capacity: <%= node['cloudfoundry_mysql_service']['node']['capacity'] %>
 plan: free
-local_db: sqlite3:<%= node[:cloudfoundry_mysql_service][:node][:base_dir] %>/mysql_node.db
+local_db: sqlite3:<%= node['cloudfoundry_mysql_service']['node']['base_dir'] %>/mysql_node.db
 base_dir: <%= node.cloudfoundry_mysql_service.node.base_dir %>
 mysqldump_bin: mysqldump
 gzip_bin: gzip
 mysql_bin: mysql
-mbus: nats://<%= node[:cloudfoundry_common][:nats_server][:user] %>:<%= node[:cloudfoundry_common][:nats_server][:password] %>@<%= node[:cloudfoundry_common][:nats_server][:host] %>:<%= node[:cloudfoundry_common][:nats_server][:port] %>/
-index: <%= node.cloudfoundry_mysql_service.node[:index] %>
+mbus: nats://<%= node['cloudfoundry_common']['nats_server']['user'] %>:<%= node['cloudfoundry_common']['nats_server']['password'] %>@<%= node['cloudfoundry_common']['nats_server']['host'] %>:<%= node['cloudfoundry_common']['nats_server']['port'] %>/
+index: <%= node.cloudfoundry_mysql_service.node['index'] %>
 pid: <%= node.cloudfoundry_mysql_service.node.pid_file %>
-node_id: mysql_node_<%= node.cloudfoundry_mysql_service.node[:index] %>
-supported_versions: <%= "['#{node[:cloudfoundry_mysql_service][:supported_versions].keys.join("', '")}']"%>
+node_id: mysql_node_<%= node.cloudfoundry_mysql_service.node['index'] %>
+supported_versions: <%= "['#{node['cloudfoundry_mysql_service']['supported_versions'].keys.join("', '")}']"%>
 default_version: "<%= node.cloudfoundry_mysql_service.default_version %>"
 op_time_limit: <%= node.cloudfoundry_mysql_service.node.op_time_limit %>
 connection_wait_timeout: <%= node.cloudfoundry_mysql_service.node.connection_wait_timeout %>
