@@ -1,11 +1,11 @@
 # Where to write the mysql service node's pid.
-default['cloudfoundry_mysql_service']['node']['pid_file'] = File.join(node.cloudfoundry_common.pid_dir, "mysql_node.pid")
+default['cloudfoundry_mysql_service']['node']['pid_file'] = File.join(node['cloudfoundry_common']['pid_dir'], "mysql_node.pid")
 
 # Where to write the mysql service node's logs.
-default['cloudfoundry_mysql_service']['node']['log_file'] = File.join(node.cloudfoundry_common.log_dir, "mysql_node.log")
+default['cloudfoundry_mysql_service']['node']['log_file'] = File.join(node['cloudfoundry_common']['log_dir'], "mysql_node.log")
 
 # TODO (trotter): Find out what this does.
-default['cloudfoundry_mysql_service']['node']['base_dir'] = File.join(node.cloudfoundry_common.services_dir, "mysql")
+default['cloudfoundry_mysql_service']['node']['base_dir'] = File.join(node['cloudfoundry_common']['services_dir'], "mysql")
 
 # Log level for the msyql service node.
 default['cloudfoundry_mysql_service']['node']['log_level'] = "info"
