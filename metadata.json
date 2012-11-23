@@ -1,0 +1,33 @@
+{
+  "name": "cloudfoundry-mysql-service",
+  "description": "Installs/Configures cloudfoundry-mysql-service",
+  "long_description": "Description\n===========\n\nRequirements\n============\n\nAttributes\n==========\n\nUsage\n=====\n\n",
+  "maintainer": "Trotter Cashion",
+  "maintainer_email": "cashion@gmail.com",
+  "license": "Apache 2.0",
+  "platforms": {
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+    "cloudfoundry-common": ">= 0.0.0",
+    "cloudfoundry_service": ">= 0.0.0",
+    "mysql": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.0.1"
+}

@@ -21,9 +21,12 @@
 node.default['cloudfoundry_mysql_service']['node']['base_dir'] = File.join(node['cloudfoundry_common']['services_dir'], "mysql")
 node.default['cloudfoundry_mysql_service']['node']['db_logs_dir'] = File.join(node['cloudfoundry_common']['log_dir'], "mysql")
 node.default['cloudfoundry_mysql_service']['node']['instances_dir'] = File.join(node['cloudfoundry_mysql_service']['node']['base_dir'], "instances")
-node.default['mysql']['bind_address'] = node['ipaddress']
+
+node.override['mysql']['bind_address'] = node['ipaddress']
+node.override['mysql']['ec2_path'] = node['cloudfoundry_mysql_service']['node']['instances_dir']
 
 include_recipe "mysql::server"
+include_recipe "mysql::server_ec2"
 
 %w[libcurl3 libcurl3-gnutls libcurl4-openssl-dev sqlite3 libsqlite3-ruby libsqlite3-dev].each do |p|
   package p
